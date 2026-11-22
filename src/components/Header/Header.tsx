@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import { FiBell, FiBox, FiSearch, FiShoppingCart } from 'react-icons/fi';
 
 // extras
 import styles from './Header.module.css';
@@ -8,7 +9,7 @@ function Header() {
     <header className={styles.header}>
       {/* Brand */}
       <Link to='/' className={styles.brand}>
-        <span className={styles.brandIcon}>◈</span>
+        <FiBox className={styles.brandIcon} aria-hidden='true' />
         <span className={styles.brandName}>PLAYZONE</span>
       </Link>
 
@@ -30,10 +31,7 @@ function Header() {
 
       {/* Search */}
       <div className={styles.search}>
-        <svg viewBox='0 0 24 24' className={styles.searchIcon}>
-          <circle cx='11' cy='11' r='7' />
-          <path d='m16 16 5 5' />
-        </svg>
+        <FiSearch className={styles.searchIcon} aria-hidden='true' />
 
         <input type='text' placeholder='Search games, genres, publishers...' />
       </div>
@@ -42,20 +40,13 @@ function Header() {
       <div className={styles.actions}>
         {/* Notifications */}
         <div className={styles.actionItem}>
-          <svg viewBox='0 0 24 24'>
-            <path d='M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9' />
-            <path d='M10 21h4' />
-          </svg>
+          <FiBell aria-hidden='true' />
           <span className={styles.notificationDot} />
         </div>
 
         {/* Cart */}
-        <div className={`${styles.actionItem} ${styles.cart}`}>
-          <svg viewBox='0 0 24 24'>
-            <circle cx='9' cy='21' r='1' />
-            <circle cx='20' cy='21' r='1' />
-            <path d='M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6' />
-          </svg>
+        <div className={styles.actionItem}>
+          <FiShoppingCart aria-hidden='true' />
           <span className={styles.cartCount}>2</span>
         </div>
 

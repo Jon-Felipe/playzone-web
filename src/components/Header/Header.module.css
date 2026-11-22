@@ -25,7 +25,9 @@
 }
 
 .brandIcon {
-  font-size: var(--text-xs);
+  width: var(--text-base);
+  height: var(--text-base);
+  stroke-width: 2;
   color: var(--primary);
 }
 

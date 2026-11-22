@@ -1,8 +1,12 @@
-import { Link } from 'react-router';
+import { Link, NavLink } from 'react-router';
 import { FiBell, FiBox, FiSearch, FiShoppingCart } from 'react-icons/fi';
 
 // extras
 import styles from './Header.module.css';
+
+function getNavLinkClassName({ isActive }: { isActive: boolean }) {
+  return `${styles.navLink} ${isActive ? styles.active : ''}`;
+}
 
 function Header() {
   return (
@@ -15,12 +19,12 @@ function Header() {
 
       {/* Navigation */}
       <nav className={styles.nav}>
-        <Link to='/' className={`${styles.navLink} ${styles.active}`}>
+        <NavLink to='/' end className={getNavLinkClassName}>
           Discover
-        </Link>
-        <Link to='/' className={styles.navLink}>
+        </NavLink>
+        <NavLink to='/store' className={getNavLinkClassName}>
           Store
-        </Link>
+        </NavLink>
         <Link to='/' className={styles.navLink}>
           Library
         </Link>

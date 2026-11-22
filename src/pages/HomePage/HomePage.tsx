@@ -6,7 +6,16 @@ import {
   FiChevronLeft,
   FiChevronRight,
   FiThumbsUp,
+  FiClock,
 } from 'react-icons/fi';
+
+const publisherSpotlight = {
+  title: 'PlayStation Studios Weekend Sale',
+  description:
+    'Save up to 20% on select PlayStation Studios games this weekend! Limited time offer. Buy now and enjoy exclusive deals!',
+  timeRemaining: '3d 12h 45m',
+  dealsCount: 10,
+};
 
 // extras
 import { dummyGames } from '../../data/dummy_data';
@@ -95,7 +104,8 @@ function HomePage() {
               <span
                 aria-label={`Featured game ${featuredGameIndex + 1} of ${highlights.length}`}
               >
-                1 / 5
+                {String(featuredGameIndex + 1).padStart(2, '0')} /{' '}
+                {String(highlights.length).padStart(2, '0')}
               </span>
               <FiChevronRight aria-hidden='true' />
             </div>
@@ -144,6 +154,35 @@ function HomePage() {
             })}
           </div>
         </aside>
+      </section>
+
+      <section className={styles.publisherSpotlight}>
+        <div className={styles.publisherContent}>
+          <div className={styles.topInfo}>
+            <span className={styles.publisherBadge}>PUBLISHER SPOTLIGHT</span>
+
+            <span className={styles.timer}>
+              <FiClock aria-hidden='true' />
+              {publisherSpotlight.timeRemaining}
+            </span>
+          </div>
+
+          <h2 className={styles.publisherTitle}>{publisherSpotlight.title}</h2>
+
+          <p className={styles.publisherDescription}>
+            {publisherSpotlight.description}
+          </p>
+        </div>
+
+        <div className={styles.publisherActions}>
+          <Link to='/' className={styles.dealsButton}>
+            View All {publisherSpotlight.dealsCount} Deals
+          </Link>
+
+          <Link to='/' className={styles.franchiseButton}>
+            Browse Franchise
+          </Link>
+        </div>
       </section>
     </div>
   );

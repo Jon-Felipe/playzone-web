@@ -1,9 +1,6 @@
 import { Link } from 'react-router';
 import { FiBookmark } from 'react-icons/fi';
 
-// components
-import Header from '../../components/Header/Header';
-
 // extras
 import styles from './HomePage.module.css';
 const categories = [
@@ -17,9 +14,7 @@ const categories = [
 
 function HomePage() {
   return (
-    <div>
-      <Header />
-
+    <>
       {/* Hero section */}
       <section className={styles.filterBar}>
         {/* Category filters */}
@@ -48,7 +43,7 @@ function HomePage() {
           </Link>
         </div>
       </section>
-    </div>
+    </>
   );
 }
 

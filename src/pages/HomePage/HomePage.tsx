@@ -10,7 +10,12 @@ import {
   FiArrowRight,
   FiShoppingBag,
   FiStar,
+  FiShoppingCart,
 } from 'react-icons/fi';
+
+// extras
+import { dummyGames } from '../../data/dummy_data';
+import styles from './HomePage.module.css';
 
 const publisherSpotlight = {
   title: 'PlayStation Studios Weekend Sale',
@@ -20,12 +25,11 @@ const publisherSpotlight = {
   dealsCount: 10,
 };
 
-// extras
-import { dummyGames } from '../../data/dummy_data';
-import styles from './HomePage.module.css';
+const tabs = ['Top Sellers', 'New Releases', 'Upcoming', 'Indie Gems'];
 
 function HomePage() {
   const [featuredGameIndex, setFeaturedGameIndex] = useState<number>(0);
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   const featuredGame = dummyGames[featuredGameIndex];
   const highlights = dummyGames.slice(0, 5);
@@ -275,6 +279,100 @@ function HomePage() {
                       <FiShoppingBag aria-hidden='true' />
                       <span>Buy</span>
                     </Link>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className={styles.trendingSection}>
+        <div className={styles.trendingHeader}>
+          <div>
+            <span className={styles.trendingEyebrow}>CURATED STREAMS</span>
+
+            <h2 className={styles.trendingTitle}>
+              Recently Released &amp; Trending
+            </h2>
+          </div>
+
+          <div className={styles.tabs}>
+            {tabs.map((tab, index) => (
+              <button
+                type='button'
+                key={tab}
+                className={`${styles.tab} ${
+                  index === activeTabIndex ? styles.activeTab : ''
+                }`}
+                aria-pressed={index === activeTabIndex}
+                onClick={() => setActiveTabIndex(index)}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className={styles.trendingGrid}>
+          {popularGames.map((game, index) => {
+            const edition = game.editions.find(
+              (item) => item.id === 'standard',
+            );
+
+            const price = edition?.price ?? 0;
+
+            return (
+              <article className={styles.trendingCard} key={game.id}>
+                <Link
+                  to={`/games/${game.id}`}
+                  className={styles.trendingImageLink}
+                >
+                  <div className={styles.imageWrapper}>
+                    <img
+                      src={game.coverImage}
+                      alt={game.title}
+                      className={styles.trendingImage}
+                    />
+
+                    <div className={styles.trendingImageOverlay} />
+
+                    <span className={styles.imageBadge}>
+                      {['Top Rated', 'Trending', 'Popular', 'Featured'][index]}
+                    </span>
+                  </div>
+                </Link>
+
+                <div className={styles.trendingGameInfo}>
+                  <Link to={`/games/${game.id}`} className={styles.gameName}>
+                    {game.title}
+                  </Link>
+
+                  <p className={styles.developer}>
+                    {game.developer} • {game.genres.slice(0, 2).join(' • ')}
+                  </p>
+
+                  <div className={styles.tags}>
+                    {game.genres.slice(0, 2).map((genre) => (
+                      <span className={styles.tag} key={genre}>
+                        {genre}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className={styles.cardBottom}>
+                    <span className={styles.trendingPrice}>
+                      ${price.toFixed(2)}
+                    </span>
+
+                    <button
+                      type='button'
+                      className={styles.cartButton}
+                      aria-label={`Add ${game.title} to cart`}
+                    >
+                      <FiShoppingCart aria-hidden='true' />
+                      Add to Cart
+                    </button>
                   </div>
                 </div>
               </article>

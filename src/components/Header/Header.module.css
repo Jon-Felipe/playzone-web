@@ -1,5 +1,6 @@
 .header {
   width: 100%;
+  min-width: 0;
   height: 90px;
   padding: 0 var(--spacing-2xl);
 
@@ -17,6 +18,8 @@
 /* Brand */
 
 .brand {
+  min-width: 0;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -42,6 +45,7 @@
 /* Navigation */
 
 .nav {
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
@@ -89,7 +93,7 @@
 .search {
   flex: 1;
   max-width: 512px;
-  min-width: 180px;
+  min-width: 0;
   height: 46px;
 
   display: flex;
@@ -145,6 +149,7 @@
 /* Actions */
 
 .actions {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 30px;
@@ -156,6 +161,7 @@
   height: 35px;
 
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
 
@@ -301,11 +307,27 @@
 
 @media (max-width: 900px) {
   .header {
+    height: auto;
+    min-height: 75px;
+    padding-block: var(--spacing-sm);
     gap: var(--spacing-md);
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    flex: 1;
   }
 
   .brandName {
     font-size: var(--text-lg);
+  }
+
+  .nav {
+    order: 3;
+    width: 100%;
+    flex: 1 1 100%;
+    height: auto;
+    justify-content: space-between;
   }
 
   .navLink {
@@ -314,11 +336,20 @@
   }
 
   .search {
-    max-width: 280px;
+    order: 4;
+    width: 100%;
+    flex: 1 1 100%;
+    max-width: none;
+    margin-left: 0;
   }
 
   .actions {
     gap: 15px;
+  }
+
+  .divider,
+  .level {
+    display: none;
   }
 }
 
@@ -335,9 +366,8 @@
   }
 
   .nav {
-    order: 3;
     width: 100%;
-    height: auto;
+    flex: 1 1 100%;
     justify-content: space-between;
   }
 
@@ -347,9 +377,7 @@
   }
 
   .search {
-    order: 4;
     flex: 1 1 100%;
-    max-width: none;
     margin: 0;
   }
 
@@ -358,10 +386,6 @@
     gap: 16px;
   }
 
-  .divider,
-  .level {
-    display: none;
-  }
 }
 
 @media (max-width: 380px) {

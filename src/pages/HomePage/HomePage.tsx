@@ -7,6 +7,9 @@ import {
   FiChevronRight,
   FiThumbsUp,
   FiClock,
+  FiArrowRight,
+  FiShoppingBag,
+  FiStar,
 } from 'react-icons/fi';
 
 const publisherSpotlight = {
@@ -27,6 +30,8 @@ function HomePage() {
   const featuredGame = dummyGames[featuredGameIndex];
   const highlights = dummyGames.slice(0, 5);
   const edition = featuredGame.editions[0];
+
+  const popularGames = dummyGames.slice(0, 4);
 
   return (
     <div className={styles.page}>
@@ -104,8 +109,7 @@ function HomePage() {
               <span
                 aria-label={`Featured game ${featuredGameIndex + 1} of ${highlights.length}`}
               >
-                {String(featuredGameIndex + 1).padStart(2, '0')} /{' '}
-                {String(highlights.length).padStart(2, '0')}
+                1 / 5
               </span>
               <FiChevronRight aria-hidden='true' />
             </div>
@@ -182,6 +186,100 @@ function HomePage() {
           <Link to='/' className={styles.franchiseButton}>
             Browse Franchise
           </Link>
+        </div>
+      </section>
+
+      <section className={styles.popularSection}>
+        <div className={styles.sectionHeader}>
+          <div>
+            <span className={styles.eyebrow}>TOP CHARTS</span>
+            <h2 className={styles.sectionTitle}>Popular This Week</h2>
+          </div>
+
+          <Link to='/' className={styles.viewAll}>
+            See All Top Sellers
+            <FiArrowRight aria-hidden='true' />
+          </Link>
+        </div>
+
+        <div className={styles.gamesGrid}>
+          {popularGames.map((game) => {
+            const standardEdition = game.editions.find(
+              (edition) => edition.id === 'standard',
+            );
+
+            const price = standardEdition?.price ?? 0;
+
+            const discount = standardEdition?.discountPercentage ?? 0;
+
+            const originalPrice = standardEdition?.originalPrice ?? price;
+
+            return (
+              <article className={styles.gameCard} key={game.id}>
+                <Link to={`/games/${game.id}`} className={styles.imageLink}>
+                  <div className={styles.imageContainer}>
+                    <img
+                      src={game.coverImage}
+                      alt={game.title}
+                      className={styles.gameImage}
+                      loading='lazy'
+                    />
+
+                    <div className={styles.imageOverlay} />
+
+                    <span className={styles.platformBadge}>
+                      <span className={styles.platformDot} />
+                      PC Verified
+                    </span>
+
+                    {discount > 0 && (
+                      <span className={styles.discountBadge}>-{discount}%</span>
+                    )}
+                  </div>
+                </Link>
+
+                <div className={styles.cardContent}>
+                  <div className={styles.gameMeta}>
+                    <span className={styles.cardGenres}>
+                      {game.genres.slice(0, 3).join(' • ')}
+                    </span>
+
+                    <span className={styles.cardRating}>
+                      <FiStar aria-hidden='true' />
+                      {game.rating.percentage}%
+                    </span>
+                  </div>
+
+                  <Link to={`/games/${game.id}`} className={styles.gameTitle}>
+                    {game.title}
+                  </Link>
+
+                  <div className={styles.cardFooter}>
+                    <div className={styles.priceContainer}>
+                      {discount > 0 && (
+                        <span className={styles.originalPrice}>
+                          ${originalPrice.toFixed(2)}
+                        </span>
+                      )}
+
+                      <span className={styles.cardPrice}>
+                        ${price.toFixed(2)}
+                      </span>
+                    </div>
+
+                    <Link
+                      to={`/games/${game.id}`}
+                      className={styles.buyButton}
+                      aria-label={`View ${game.title}`}
+                    >
+                      <FiShoppingBag aria-hidden='true' />
+                      <span>Buy</span>
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </section>
     </div>

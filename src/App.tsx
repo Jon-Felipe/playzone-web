@@ -1,10 +1,17 @@
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router';
+
+// pages
+import HomePage from './pages/HomePage.tsx';
 
 function App() {
   return (
-    <main>
-      <h1>Welcome to Playzone</h1>
-    </main>
+    <BrowserRouter>
+      <main>
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+        </Routes>
+      </main>
+    </BrowserRouter>
   );
 }
 

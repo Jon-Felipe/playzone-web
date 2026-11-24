@@ -4,8 +4,7 @@ import { FiCloud, FiMonitor, FiShoppingBag, FiThumbsUp } from 'react-icons/fi';
 // extras
 import type { Game } from '../../types/game';
 import { formatReleaseDate, getGamePricing } from '../../extras/helpers';
-import { useAppDispatch } from '../../app/hooks';
-import { addItem } from '../../features/cart/cartSlice';
+import useAddToCart from '../../hooks/useAddToCart';
 import styles from './GameListCard.module.css';
 
 interface GameListCardProps {
@@ -13,20 +12,8 @@ interface GameListCardProps {
 }
 
 function GameListCard({ game }: GameListCardProps) {
-  const dispatch = useAppDispatch();
-  const { editionId, price, discount, originalPrice } = getGamePricing(game);
-
-  const handleAddToCart = () => {
-    dispatch(
-      addItem({
-        id: game.id,
-        title: game.title,
-        editionId,
-        quantity: 1,
-        price,
-      }),
-    );
-  };
+  const addToCart = useAddToCart();
+  const { price, discount, originalPrice } = getGamePricing(game);
 
   return (
     <article className={styles.gameListCard}>
@@ -92,7 +79,7 @@ function GameListCard({ game }: GameListCardProps) {
           type='button'
           className={styles.buyButton}
           aria-label={`Add ${game.title} to cart`}
-          onClick={handleAddToCart}
+          onClick={() => addToCart(game)}
         >
           <FiShoppingBag aria-hidden='true' />
           Add To Cart

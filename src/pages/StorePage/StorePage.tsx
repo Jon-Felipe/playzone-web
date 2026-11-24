@@ -82,9 +82,16 @@ function StorePage() {
 
           <div className={styles.toolbarRight}>
             <div className={styles.sortBox}>
-              <span>Sort:</span>
-              <strong>Popularity: High to Low</strong>
-              <FiChevronDown />
+              <label htmlFor='store-sort'>Sort:</label>
+              <select id='store-sort' defaultValue='popularity'>
+                <option value='popularity'>Popularity: High to Low</option>
+                <option value='newest'>Newest Releases</option>
+                <option value='price-low'>Price: Low to High</option>
+                <option value='price-high'>Price: High to Low</option>
+                <option value='title-asc'>Title: A to Z</option>
+                <option value='title-desc'>Title: Z to A</option>
+              </select>
+              <FiChevronDown aria-hidden='true' />
             </div>
 
             <div className={styles.viewToggle} aria-label='Catalog view'>

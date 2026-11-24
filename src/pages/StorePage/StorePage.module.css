@@ -156,8 +156,9 @@
 }
 
 .sortBox {
+  position: relative;
   height: 40px;
-  padding: 0 var(--spacing-md);
+  padding-left: var(--spacing-md);
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
@@ -168,13 +169,38 @@
   color: var(--text-secondary);
 }
 
-.sortBox strong {
+.sortBox label {
+  flex-shrink: 0;
+}
+
+.sortBox select {
+  min-width: 0;
+  height: 100%;
+  padding: 0 34px 0 0;
+  appearance: none;
+  border: 0;
+  outline: 0;
+  background: transparent;
   color: var(--text-primary);
   font-size: var(--text-sm);
   font-weight: 600;
+  cursor: pointer;
+}
+
+.sortBox select:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 4px;
+}
+
+.sortBox option {
+  background: var(--surface);
+  color: var(--text-primary);
 }
 
 .sortBox svg {
+  position: absolute;
+  right: 12px;
+  pointer-events: none;
   font-size: var(--text-sm);
   color: var(--text-secondary);
 }
@@ -681,14 +707,13 @@
   .sortBox {
     min-width: 0;
     gap: 6px;
-    padding: 0 10px;
+    padding-left: 10px;
   }
 
-  .sortBox strong {
-    overflow: hidden;
+  .sortBox select {
+    max-width: 170px;
     font-size: var(--text-xs);
     text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
   .sidebar {

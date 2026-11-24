@@ -12,10 +12,10 @@ import {
 } from 'react-icons/fi';
 
 // components
-import GamesGrid from '../../components/GamesGrid/GamesGrid';
+import GameCollection from '../../components/GameCollection/GameCollection';
 
 // extras
-import { dummyGames } from '../../data/dummy_data';
+import { dummyGames } from '../../extras/dummy_data';
 import styles from './HomePage.module.css';
 
 const publisherSpotlight = {
@@ -207,7 +207,7 @@ function HomePage() {
           </Link>
         </div>
 
-        <GamesGrid games={popularGames} />
+        <GameCollection games={popularGames} view='grid' />
       </section>
 
       <section className={styles.trendingSection}>

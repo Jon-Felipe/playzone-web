@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { FaApple, FaLinux, FaWindows } from 'react-icons/fa';
 
 // components
-import GamesGrid from '../../components/GamesGrid/GamesGrid';
+import GameCollection, {
+  type GameCollectionView,
+} from '../../components/GameCollection/GameCollection';
 
 // extras
-import { dummyGames } from '../../data/dummy_data';
+import { dummyGames } from '../../extras/dummy_data';
 import styles from './StorePage.module.css';
 import {
   FiSearch,
@@ -20,6 +22,7 @@ import {
 const filters = ['Action', 'Adventure', 'RPG'];
 
 function StorePage() {
+  const [view, setView] = useState<GameCollectionView>('grid');
   const [expandedFilters, setExpandedFilters] = useState<{
     genre: boolean;
     hardware: boolean;
@@ -84,13 +87,29 @@ function StorePage() {
               <FiChevronDown />
             </div>
 
-            <div className={styles.viewToggle}>
-              <div className={styles.activeView}>
-                <FiGrid />
-              </div>
-              <div className={styles.inactiveView}>
-                <FiList />
-              </div>
+            <div className={styles.viewToggle} aria-label='Catalog view'>
+              <button
+                type='button'
+                className={`${styles.viewButton} ${
+                  view === 'grid' ? styles.activeView : ''
+                }`}
+                aria-label='Grid view'
+                aria-pressed={view === 'grid'}
+                onClick={() => setView('grid')}
+              >
+                <FiGrid aria-hidden='true' />
+              </button>
+              <button
+                type='button'
+                className={`${styles.viewButton} ${
+                  view === 'list' ? styles.activeView : ''
+                }`}
+                aria-label='List view'
+                aria-pressed={view === 'list'}
+                onClick={() => setView('list')}
+              >
+                <FiList aria-hidden='true' />
+              </button>
             </div>
           </div>
         </div>
@@ -299,9 +318,10 @@ function StorePage() {
               </div>
             </div>
 
-            <GamesGrid
-              games={dummyGames.slice(0, 9)}
-              className={styles.storeGamesGrid}
+            <GameCollection
+              games={dummyGames.slice(0, 6)}
+              view={view}
+              className={styles.storeGameCollection}
             />
           </div>
         </section>

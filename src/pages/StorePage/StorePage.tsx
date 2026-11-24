@@ -18,6 +18,8 @@ import {
   FiList,
   FiX,
   FiSliders,
+  FiChevronLeft,
+  FiChevronRight,
 } from 'react-icons/fi';
 
 function StorePage() {
@@ -351,6 +353,51 @@ function StorePage() {
               view={view}
               className={styles.storeGameCollection}
             />
+          </div>
+
+          <div className={styles.pagination}>
+            <div className={styles.info}>
+              Showing <strong>1–9</strong> of <strong>14,240</strong> games
+            </div>
+
+            <div className={styles.controls}>
+              <button
+                type='button'
+                className={`${styles.navButton} ${styles.disabled}`}
+                disabled
+              >
+                <FiChevronLeft aria-hidden='true' />
+                <span>Prev</span>
+              </button>
+
+              <button
+                type='button'
+                className={`${styles.page} ${styles.active}`}
+                aria-current='page'
+              >
+                1
+              </button>
+              <button type='button' className={styles.page}>
+                2
+              </button>
+              <button type='button' className={styles.page}>
+                3
+              </button>
+              <button type='button' className={styles.page}>
+                4
+              </button>
+
+              <span className={styles.ellipsis}>...</span>
+
+              <button type='button' className={styles.page}>
+                120
+              </button>
+
+              <button type='button' className={styles.navButton}>
+                <span>Next</span>
+                <FiChevronRight aria-hidden='true' />
+              </button>
+            </div>
           </div>
         </section>
       </div>

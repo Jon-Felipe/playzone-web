@@ -5,9 +5,11 @@ import { FaApple, FaLinux, FaWindows } from 'react-icons/fa';
 import GameCollection, {
   type GameCollectionView,
 } from '../../components/GameCollection/GameCollection';
+import FilterSection from '../../components/FilterSection/FilterSection';
 
 // extras
 import { dummyGames } from '../../extras/dummy_data';
+import useToggleList from '../../hooks/useToggleList';
 import styles from './StorePage.module.css';
 import {
   FiSearch,
@@ -15,30 +17,16 @@ import {
   FiGrid,
   FiList,
   FiX,
-  FiChevronUp,
   FiSliders,
 } from 'react-icons/fi';
 
-const filters = ['Action', 'Adventure', 'RPG'];
-
 function StorePage() {
+  const {
+    items: filters,
+    toggleItem: toggleActiveFilter,
+    clearItems: clearFilters,
+  } = useToggleList<string>();
   const [view, setView] = useState<GameCollectionView>('grid');
-  const [expandedFilters, setExpandedFilters] = useState<{
-    genre: boolean;
-    hardware: boolean;
-    operatingSystem: boolean;
-  }>({
-    genre: true,
-    hardware: true,
-    operatingSystem: true,
-  });
-
-  const toggleFilter = (filter: keyof typeof expandedFilters) => {
-    setExpandedFilters((current) => ({
-      ...current,
-      [filter]: !current[filter],
-    }));
-  };
 
   return (
     <>
@@ -74,7 +62,11 @@ function StorePage() {
         </div>
 
         {/* Toolbar */}
-        <div className={styles.toolbar}>
+        <div
+          className={`${styles.toolbar} ${
+            filters.length === 0 ? styles.standaloneToolbar : ''
+          }`}
+        >
           <div className={styles.searchBox}>
             <FiSearch />
             <span>Filter by name, tags, or publisher...</span>
@@ -122,20 +114,34 @@ function StorePage() {
         </div>
 
         {/* Active filters */}
-        <div className={styles.filterBar}>
-          <div className={styles.activeFilters}>
-            <span className={styles.activeLabel}>ACTIVE:</span>
+        {filters.length > 0 && (
+          <div className={styles.filterBar}>
+            <div className={styles.activeFilters}>
+              <span className={styles.activeLabel}>ACTIVE:</span>
 
-            {filters.map((filter) => (
-              <div className={styles.filterChip} key={filter}>
-                {filter}
-                <FiX />
-              </div>
-            ))}
+              {filters.map((filter) => (
+                <div className={styles.filterChip} key={filter}>
+                  {filter}
+                  <button
+                    type='button'
+                    aria-label={`Remove filter ${filter}`}
+                    onClick={() => toggleActiveFilter(filter)}
+                  >
+                    <FiX aria-hidden='true' />
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            <button
+              type='button'
+              className={styles.clearAll}
+              onClick={clearFilters}
+            >
+              Clear All ({filters.length})
+            </button>
           </div>
-
-          <span className={styles.clearAll}>Clear All (3)</span>
-        </div>
+        )}
       </section>
 
       <div className={styles.mainContent}>
@@ -144,15 +150,18 @@ function StorePage() {
             <h2>
               <FiSliders /> Filters
             </h2>
-            <span>Reset</span>
+            {filters.length > 0 && (
+              <button type='button' onClick={clearFilters}>
+                Reset
+              </button>
+            )}
           </div>
 
-          <div className={styles.filterCard}>
-            <div className={styles.filterTitle}>
-              <strong>Price Range</strong>
-              <span>$0 — $70</span>
-            </div>
-
+          <FilterSection
+            title='Price Range'
+            trailing={<span>$0 — $70</span>}
+            collapsible={false}
+          >
             <div className={styles.rangeTrack}>
               <div className={styles.rangeProgress} />
               <div className={styles.rangeThumb} />
@@ -166,149 +175,161 @@ function StorePage() {
 
             <div className={styles.filterOptions}>
               <label>
-                <input type='checkbox' /> Free to Play <span>1,120</span>
+                <input
+                  type='checkbox'
+                  checked={filters.includes('Free to Play')}
+                  onChange={() => toggleActiveFilter('Free to Play')}
+                />{' '}
+                Free to Play <span>1,120</span>
               </label>
               <label>
-                <input type='checkbox' /> Under $10 <span>4,290</span>
+                <input
+                  type='checkbox'
+                  checked={filters.includes('Under $10')}
+                  onChange={() => toggleActiveFilter('Under $10')}
+                />{' '}
+                Under $10 <span>4,290</span>
               </label>
               <label>
-                <input type='checkbox' /> Under $20 <span>7,810</span>
+                <input
+                  type='checkbox'
+                  checked={filters.includes('Under $20')}
+                  onChange={() => toggleActiveFilter('Under $20')}
+                />{' '}
+                Under $20 <span>7,810</span>
               </label>
-              <label className={styles.checkedOption}>
-                <input type='checkbox' defaultChecked />
+              <label>
+                <input
+                  type='checkbox'
+                  checked={filters.includes('On Sale Only')}
+                  onChange={() => toggleActiveFilter('On Sale Only')}
+                />
                 On Sale Only <span>3,480</span>
               </label>
             </div>
-          </div>
+          </FilterSection>
 
-          <div className={styles.filterCard}>
-            <button
-              type='button'
-              className={`${styles.filterTitle} ${styles.filterToggle} ${
-                expandedFilters.genre ? '' : styles.collapsedTitle
-              }`}
-              aria-expanded={expandedFilters.genre}
-              aria-controls='genre-filter-options'
-              onClick={() => toggleFilter('genre')}
-            >
-              <strong>Genre</strong>
-              <FiChevronUp
-                aria-hidden='true'
-                className={expandedFilters.genre ? '' : styles.collapsedChevron}
-              />
-            </button>
+          <FilterSection title='Genre'>
+            <div className={styles.filterOptions}>
+              <label>
+                <input
+                  type='checkbox'
+                  checked={filters.includes('Action')}
+                  onChange={() => toggleActiveFilter('Action')}
+                />{' '}
+                Action <span>4,820</span>
+              </label>
+              <label>
+                <input
+                  type='checkbox'
+                  checked={filters.includes('Adventure')}
+                  onChange={() => toggleActiveFilter('Adventure')}
+                />{' '}
+                Adventure <span>3,150</span>
+              </label>
+              <label>
+                <input
+                  type='checkbox'
+                  checked={filters.includes('RPG')}
+                  onChange={() => toggleActiveFilter('RPG')}
+                />{' '}
+                RPG <span>2,940</span>
+              </label>
+              <label>
+                <input
+                  type='checkbox'
+                  checked={filters.includes('Strategy')}
+                  onChange={() => toggleActiveFilter('Strategy')}
+                />{' '}
+                Strategy <span>1,840</span>
+              </label>
+              <label>
+                <input
+                  type='checkbox'
+                  checked={filters.includes('Simulation')}
+                  onChange={() => toggleActiveFilter('Simulation')}
+                />{' '}
+                Simulation <span>1,230</span>
+              </label>
+            </div>
+          </FilterSection>
 
-            {expandedFilters.genre && (
-              <div className={styles.filterOptions} id='genre-filter-options'>
-                <label>
-                  <input type='checkbox' /> Action <span>4,820</span>
-                </label>
-                <label>
-                  <input type='checkbox' /> Adventure <span>3,150</span>
-                </label>
-                <label className={styles.checkedOption}>
-                  <input type='checkbox' defaultChecked />
-                  RPG <span>2,940</span>
-                </label>
-                <label>
-                  <input type='checkbox' /> Strategy <span>1,840</span>
-                </label>
-                <label>
-                  <input type='checkbox' /> Simulation <span>1,230</span>
-                </label>
-              </div>
-            )}
-          </div>
+          <FilterSection title='Hardware & Features'>
+            <div className={styles.filterOptions}>
+              <label>
+                <input
+                  type='checkbox'
+                  checked={filters.includes('Single Player')}
+                  onChange={() => toggleActiveFilter('Single Player')}
+                />{' '}
+                Single Player <span>9,410</span>
+              </label>
+              <label>
+                <input
+                  type='checkbox'
+                  checked={filters.includes('Multiplayer')}
+                  onChange={() => toggleActiveFilter('Multiplayer')}
+                />{' '}
+                Multiplayer <span>3,150</span>
+              </label>
+              <label>
+                <input
+                  type='checkbox'
+                  checked={filters.includes('VR Support')}
+                  onChange={() => toggleActiveFilter('VR Support')}
+                />{' '}
+                VR Support <span>590</span>
+              </label>
+              <label>
+                <input
+                  type='checkbox'
+                  checked={filters.includes('Controller Support')}
+                  onChange={() => toggleActiveFilter('Controller Support')}
+                />{' '}
+                Controller Support <span>7,120</span>
+              </label>
+              <label>
+                <input
+                  type='checkbox'
+                  checked={filters.includes('Ray Tracing')}
+                  onChange={() => toggleActiveFilter('Ray Tracing')}
+                />{' '}
+                Ray Tracing <span>2,940</span>
+              </label>
+            </div>
+          </FilterSection>
 
-          <div className={styles.filterCard}>
-            <button
-              type='button'
-              className={`${styles.filterTitle} ${styles.filterToggle} ${
-                expandedFilters.hardware ? '' : styles.collapsedTitle
-              }`}
-              aria-expanded={expandedFilters.hardware}
-              aria-controls='hardware-filter-options'
-              onClick={() => toggleFilter('hardware')}
-            >
-              <strong>Hardware & Features</strong>
-              <FiChevronUp
-                aria-hidden='true'
-                className={
-                  expandedFilters.hardware ? '' : styles.collapsedChevron
-                }
-              />
-            </button>
-
-            {expandedFilters.hardware && (
-              <div
-                className={styles.filterOptions}
-                id='hardware-filter-options'
+          <FilterSection title='Operating System'>
+            <div className={styles.osOptions}>
+              <button
+                type='button'
+                className={`${styles.osOption} ${filters.includes('Windows') ? styles.activeOsOption : ''}`}
+                aria-pressed={filters.includes('Windows')}
+                onClick={() => toggleActiveFilter('Windows')}
               >
-                <label className={styles.checkedOption}>
-                  <input type='checkbox' defaultChecked /> Single Player{' '}
-                  <span>9,410</span>
-                </label>
-                <label>
-                  <input type='checkbox' /> Multiplayer <span>3,150</span>
-                </label>
-                <label>
-                  <input type='checkbox' /> VR Support <span>590</span>
-                </label>
-                <label>
-                  <input type='checkbox' /> Controller Support{' '}
-                  <span>7,120</span>
-                </label>
-                <label>
-                  <input type='checkbox' />
-                  Ray Tracing <span>2,940</span>
-                </label>
-              </div>
-            )}
-          </div>
-
-          <div className={styles.filterCard}>
-            <button
-              type='button'
-              className={`${styles.filterTitle} ${styles.filterToggle} ${
-                expandedFilters.operatingSystem ? '' : styles.collapsedTitle
-              }`}
-              aria-expanded={expandedFilters.operatingSystem}
-              aria-controls='operating-system-filter-options'
-              onClick={() => toggleFilter('operatingSystem')}
-            >
-              <strong>Operating System</strong>
-              <FiChevronUp
-                aria-hidden='true'
-                className={
-                  expandedFilters.operatingSystem ? '' : styles.collapsedChevron
-                }
-              />
-            </button>
-
-            {expandedFilters.operatingSystem && (
-              <div
-                className={styles.osOptions}
-                id='operating-system-filter-options'
+                <FaWindows aria-hidden='true' />
+                <span>Windows</span>
+              </button>
+              <button
+                type='button'
+                className={`${styles.osOption} ${filters.includes('macOS') ? styles.activeOsOption : ''}`}
+                aria-pressed={filters.includes('macOS')}
+                onClick={() => toggleActiveFilter('macOS')}
               >
-                <button
-                  type='button'
-                  className={`${styles.osOption} ${styles.activeOsOption}`}
-                  aria-pressed='true'
-                >
-                  <FaWindows aria-hidden='true' />
-                  <span>Windows</span>
-                </button>
-                <button type='button' className={styles.osOption}>
-                  <FaApple aria-hidden='true' />
-                  <span>macOS</span>
-                </button>
-                <button type='button' className={styles.osOption}>
-                  <FaLinux aria-hidden='true' />
-                  <span>SteamOS/Linux</span>
-                </button>
-              </div>
-            )}
-          </div>
+                <FaApple aria-hidden='true' />
+                <span>macOS</span>
+              </button>
+              <button
+                type='button'
+                className={`${styles.osOption} ${filters.includes('SteamOS/Linux') ? styles.activeOsOption : ''}`}
+                aria-pressed={filters.includes('SteamOS/Linux')}
+                onClick={() => toggleActiveFilter('SteamOS/Linux')}
+              >
+                <FaLinux aria-hidden='true' />
+                <span>SteamOS/Linux</span>
+              </button>
+            </div>
+          </FilterSection>
         </aside>
 
         <section className={styles.resultsSection}>

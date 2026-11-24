@@ -122,6 +122,10 @@
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
+.standaloneToolbar {
+  border-radius: var(--radius-lg);
+}
+
 .searchBox {
   height: 46px;
   width: min(512px, 55%);
@@ -292,7 +296,22 @@
   color: var(--text-secondary);
 }
 
+.filterChip button {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.filterChip button:hover {
+  color: var(--text-primary);
+}
+
 .clearAll {
+  padding: 0;
+  background: transparent;
+  background: transparent;
   color: var(--primary-light);
   font-size: var(--text-xs);
   font-weight: 600;
@@ -340,68 +359,12 @@
   font-size: var(--text-base);
 }
 
-.sidebarHeading > span {
+.sidebarHeading > button {
+  padding: 0;
+  background: transparent;
   color: var(--primary-light);
   font-size: var(--text-xs);
   font-weight: 600;
-}
-
-.filterCard {
-  padding: var(--spacing-md);
-  background: var(--surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-}
-
-.filterTitle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-md);
-}
-
-.filterTitle strong {
-  font-family: var(--font-heading);
-  font-size: var(--text-sm);
-}
-
-.filterTitle span,
-.filterTitle svg {
-  color: var(--text-secondary);
-  font-size: var(--text-xs);
-}
-
-.filterToggle {
-  width: 100%;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--text-primary);
-  text-align: left;
-}
-
-.filterToggle strong {
-  flex: 1;
-}
-
-.filterToggle svg {
-  transition:
-    color var(--transition),
-    transform var(--transition);
-}
-
-.filterToggle:hover svg {
-  color: var(--primary-light);
-}
-
-.collapsedTitle {
-  margin-bottom: 0;
-}
-
-.collapsedChevron {
-  transform: rotate(180deg);
 }
 
 .rangeTrack {
@@ -455,6 +418,10 @@
   cursor: pointer;
 }
 
+.filterOptions label:has(input:checked) {
+  color: var(--text-primary);
+}
+
 .filterOptions input {
   width: 16px;
   height: 16px;
@@ -466,10 +433,6 @@
   margin-left: auto;
   color: var(--text-muted);
   font-size: 10px;
-}
-
-.filterOptions .checkedOption {
-  color: var(--text-primary);
 }
 
 .osOptions {

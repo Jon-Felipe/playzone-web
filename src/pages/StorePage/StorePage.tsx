@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FaApple, FaLinux, FaWindows } from 'react-icons/fa';
 
 // components
@@ -19,6 +20,23 @@ import {
 const filters = ['Action', 'Adventure', 'RPG'];
 
 function StorePage() {
+  const [expandedFilters, setExpandedFilters] = useState<{
+    genre: boolean;
+    hardware: boolean;
+    operatingSystem: boolean;
+  }>({
+    genre: true,
+    hardware: true,
+    operatingSystem: true,
+  });
+
+  const toggleFilter = (filter: keyof typeof expandedFilters) => {
+    setExpandedFilters((current) => ({
+      ...current,
+      [filter]: !current[filter],
+    }));
+  };
+
   return (
     <>
       <section className={styles.catalog}>
@@ -138,82 +156,132 @@ function StorePage() {
           </div>
 
           <div className={styles.filterCard}>
-            <div className={styles.filterTitle}>
+            <button
+              type='button'
+              className={`${styles.filterTitle} ${styles.filterToggle} ${
+                expandedFilters.genre ? '' : styles.collapsedTitle
+              }`}
+              aria-expanded={expandedFilters.genre}
+              aria-controls='genre-filter-options'
+              onClick={() => toggleFilter('genre')}
+            >
               <strong>Genre</strong>
-              <FiChevronUp />
-            </div>
+              <FiChevronUp
+                aria-hidden='true'
+                className={expandedFilters.genre ? '' : styles.collapsedChevron}
+              />
+            </button>
 
-            <div className={styles.filterOptions}>
-              <label>
-                <input type='checkbox' /> Action <span>4,820</span>
-              </label>
-              <label>
-                <input type='checkbox' /> Adventure <span>3,150</span>
-              </label>
-              <label className={styles.checkedOption}>
-                <input type='checkbox' defaultChecked />
-                RPG <span>2,940</span>
-              </label>
-              <label>
-                <input type='checkbox' /> Strategy <span>1,840</span>
-              </label>
-              <label>
-                <input type='checkbox' /> Simulation <span>1,230</span>
-              </label>
-            </div>
+            {expandedFilters.genre && (
+              <div className={styles.filterOptions} id='genre-filter-options'>
+                <label>
+                  <input type='checkbox' /> Action <span>4,820</span>
+                </label>
+                <label>
+                  <input type='checkbox' /> Adventure <span>3,150</span>
+                </label>
+                <label className={styles.checkedOption}>
+                  <input type='checkbox' defaultChecked />
+                  RPG <span>2,940</span>
+                </label>
+                <label>
+                  <input type='checkbox' /> Strategy <span>1,840</span>
+                </label>
+                <label>
+                  <input type='checkbox' /> Simulation <span>1,230</span>
+                </label>
+              </div>
+            )}
           </div>
 
           <div className={styles.filterCard}>
-            <div className={styles.filterTitle}>
+            <button
+              type='button'
+              className={`${styles.filterTitle} ${styles.filterToggle} ${
+                expandedFilters.hardware ? '' : styles.collapsedTitle
+              }`}
+              aria-expanded={expandedFilters.hardware}
+              aria-controls='hardware-filter-options'
+              onClick={() => toggleFilter('hardware')}
+            >
               <strong>Hardware & Features</strong>
-              <FiChevronUp />
-            </div>
+              <FiChevronUp
+                aria-hidden='true'
+                className={
+                  expandedFilters.hardware ? '' : styles.collapsedChevron
+                }
+              />
+            </button>
 
-            <div className={styles.filterOptions}>
-              <label className={styles.checkedOption}>
-                <input type='checkbox' defaultChecked /> Single Player{' '}
-                <span>9,410</span>
-              </label>
-              <label>
-                <input type='checkbox' /> Multiplayer <span>3,150</span>
-              </label>
-              <label>
-                <input type='checkbox' /> VR Support <span>590</span>
-              </label>
-              <label>
-                <input type='checkbox' /> Controller Support <span>7,120</span>
-              </label>
-              <label>
-                <input type='checkbox' />
-                Ray Tracing <span>2,940</span>
-              </label>
-            </div>
+            {expandedFilters.hardware && (
+              <div
+                className={styles.filterOptions}
+                id='hardware-filter-options'
+              >
+                <label className={styles.checkedOption}>
+                  <input type='checkbox' defaultChecked /> Single Player{' '}
+                  <span>9,410</span>
+                </label>
+                <label>
+                  <input type='checkbox' /> Multiplayer <span>3,150</span>
+                </label>
+                <label>
+                  <input type='checkbox' /> VR Support <span>590</span>
+                </label>
+                <label>
+                  <input type='checkbox' /> Controller Support{' '}
+                  <span>7,120</span>
+                </label>
+                <label>
+                  <input type='checkbox' />
+                  Ray Tracing <span>2,940</span>
+                </label>
+              </div>
+            )}
           </div>
 
           <div className={styles.filterCard}>
-            <div className={styles.filterTitle}>
+            <button
+              type='button'
+              className={`${styles.filterTitle} ${styles.filterToggle} ${
+                expandedFilters.operatingSystem ? '' : styles.collapsedTitle
+              }`}
+              aria-expanded={expandedFilters.operatingSystem}
+              aria-controls='operating-system-filter-options'
+              onClick={() => toggleFilter('operatingSystem')}
+            >
               <strong>Operating System</strong>
-              <FiChevronUp />
-            </div>
+              <FiChevronUp
+                aria-hidden='true'
+                className={
+                  expandedFilters.operatingSystem ? '' : styles.collapsedChevron
+                }
+              />
+            </button>
 
-            <div className={styles.osOptions}>
-              <button
-                type='button'
-                className={`${styles.osOption} ${styles.activeOsOption}`}
-                aria-pressed='true'
+            {expandedFilters.operatingSystem && (
+              <div
+                className={styles.osOptions}
+                id='operating-system-filter-options'
               >
-                <FaWindows aria-hidden='true' />
-                <span>Windows</span>
-              </button>
-              <button type='button' className={styles.osOption}>
-                <FaApple aria-hidden='true' />
-                <span>macOS</span>
-              </button>
-              <button type='button' className={styles.osOption}>
-                <FaLinux aria-hidden='true' />
-                <span>SteamOS/Linux</span>
-              </button>
-            </div>
+                <button
+                  type='button'
+                  className={`${styles.osOption} ${styles.activeOsOption}`}
+                  aria-pressed='true'
+                >
+                  <FaWindows aria-hidden='true' />
+                  <span>Windows</span>
+                </button>
+                <button type='button' className={styles.osOption}>
+                  <FaApple aria-hidden='true' />
+                  <span>macOS</span>
+                </button>
+                <button type='button' className={styles.osOption}>
+                  <FaLinux aria-hidden='true' />
+                  <span>SteamOS/Linux</span>
+                </button>
+              </div>
+            )}
           </div>
         </aside>
 

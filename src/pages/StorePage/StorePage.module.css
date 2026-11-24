@@ -341,6 +341,37 @@
   font-size: var(--text-xs);
 }
 
+.filterToggle {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-primary);
+  text-align: left;
+}
+
+.filterToggle strong {
+  flex: 1;
+}
+
+.filterToggle svg {
+  transition:
+    color var(--transition),
+    transform var(--transition);
+}
+
+.filterToggle:hover svg {
+  color: var(--primary-light);
+}
+
+.collapsedTitle {
+  margin-bottom: 0;
+}
+
+.collapsedChevron {
+  transform: rotate(180deg);
+}
+
 .rangeTrack {
   position: relative;
   height: 4px;

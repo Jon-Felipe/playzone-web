@@ -3,12 +3,16 @@ import { FiBell, FiBox, FiSearch, FiShoppingCart } from 'react-icons/fi';
 
 // extras
 import styles from './Header.module.css';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../app/store';
 
 function getNavLinkClassName({ isActive }: { isActive: boolean }) {
   return `${styles.navLink} ${isActive ? styles.active : ''}`;
 }
 
 function Header() {
+  const { items: cartItems } = useSelector((state: RootState) => state.cart);
+
   return (
     <header className={styles.header}>
       {/* Brand */}
@@ -51,7 +55,7 @@ function Header() {
         {/* Cart */}
         <div className={styles.actionItem}>
           <FiShoppingCart aria-hidden='true' />
-          <span className={styles.cartCount}>2</span>
+          <span className={styles.cartCount}>{cartItems.length}</span>
         </div>
 
         <div className={styles.divider} />

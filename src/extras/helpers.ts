@@ -14,6 +14,7 @@ export function getGamePricing(game: Game) {
   const price = standardEdition?.price ?? 0;
 
   return {
+    editionId: standardEdition?.id ?? 'standard',
     price,
     discount: standardEdition?.discountPercentage ?? 0,
     originalPrice: standardEdition?.originalPrice ?? price,

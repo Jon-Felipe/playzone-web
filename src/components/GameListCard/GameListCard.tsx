@@ -1,5 +1,11 @@
 import { Link } from 'react-router';
-import { FiCloud, FiMonitor, FiShoppingBag, FiThumbsUp } from 'react-icons/fi';
+import {
+  FiCloud,
+  FiHeart,
+  FiMonitor,
+  FiShoppingBag,
+  FiThumbsUp,
+} from 'react-icons/fi';
 
 // extras
 import type { Game } from '../../types/game';
@@ -17,18 +23,28 @@ function GameListCard({ game }: GameListCardProps) {
 
   return (
     <article className={styles.gameListCard}>
-      <Link to={`/games/${game.id}`} className={styles.imageLink}>
-        <img
-          src={game.coverImage}
-          alt={game.title}
-          className={styles.gameImage}
-          loading='lazy'
-        />
-        <div className={styles.imageOverlay} />
-        {discount > 0 && (
-          <span className={styles.discountBadge}>-{discount}%</span>
-        )}
-      </Link>
+      <div className={styles.imageContainer}>
+        <Link to={`/games/${game.id}`} className={styles.imageLink}>
+          <img
+            src={game.coverImage}
+            alt={game.title}
+            className={styles.gameImage}
+            loading='lazy'
+          />
+          <div className={styles.imageOverlay} />
+          {discount > 0 && (
+            <span className={styles.discountBadge}>-{discount}%</span>
+          )}
+        </Link>
+
+        <button
+          type='button'
+          className={styles.wishlistButton}
+          aria-label={`Add ${game.title} to wishlist`}
+        >
+          <FiHeart aria-hidden='true' />
+        </button>
+      </div>
 
       <div className={styles.gameDetails}>
         <div className={styles.gameMeta}>

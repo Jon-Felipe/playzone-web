@@ -1,5 +1,11 @@
 import { Link } from 'react-router';
-import { FiCloud, FiMonitor, FiShoppingBag, FiThumbsUp } from 'react-icons/fi';
+import {
+  FiCloud,
+  FiHeart,
+  FiMonitor,
+  FiShoppingBag,
+  FiThumbsUp,
+} from 'react-icons/fi';
 
 // extras
 import type { Game } from '../../types/game';
@@ -17,8 +23,8 @@ function GameCard({ game }: GameCardProps) {
 
   return (
     <article className={styles.gameCard}>
-      <Link to={`/games/${game.id}`} className={styles.imageLink}>
-        <div className={styles.imageContainer}>
+      <div className={styles.imageContainer}>
+        <Link to={`/games/${game.id}`} className={styles.imageLink}>
           <img
             src={game.coverImage}
             alt={game.title}
@@ -46,8 +52,16 @@ function GameCard({ game }: GameCardProps) {
               <FiCloud aria-hidden='true' />
             </span>
           </div>
-        </div>
-      </Link>
+        </Link>
+
+        <button
+          type='button'
+          className={styles.wishlistButton}
+          aria-label={`Add ${game.title} to wishlist`}
+        >
+          <FiHeart aria-hidden='true' />
+        </button>
+      </div>
 
       <div className={styles.cardContent}>
         <div className={styles.gameMeta}>

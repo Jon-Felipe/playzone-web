@@ -1,4 +1,6 @@
-import { Link } from 'react-router';
+import { useState, type SubmitEvent } from 'react';
+import { Link, useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
 import {
   FiCrosshair,
   FiZap,
@@ -6,6 +8,7 @@ import {
   FiActivity,
   FiShield,
   FiLock,
+  FiMail,
   FiEye,
   FiArrowRight,
   FiSmartphone,
@@ -22,9 +25,36 @@ import {
 } from 'react-icons/fa';
 
 // extras
+import { useAppDispatch } from '../../app/hooks';
+import { setUser } from '../../features/user/userSlice';
 import styles from './LoginPage.module.css';
 
 function LoginPage() {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
+  function handleLogin(event: SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (!email || !password) {
+      toast.error('Please enter both email and password.');
+      return;
+    }
+
+    dispatch(
+      setUser({
+        id: '123',
+        name: 'Operative',
+        email: 'shadow_stalker99@playzone.gg',
+      }),
+    );
+    toast.success('Successfully logged in!');
+    navigate('/');
+  }
+
   return (
     <div className={styles.page}>
       <div className={styles.loginContainer}>
@@ -77,13 +107,18 @@ function LoginPage() {
             </div>
 
             {/* LOGIN FORM */}
-            <div className={styles.loginForm}>
+            <form className={styles.loginForm} onSubmit={handleLogin}>
               <div className={styles.field}>
-                <label>Email or GamerTag</label>
+                <label htmlFor='login-email'>Email or GamerTag</label>
 
                 <div className={styles.inputWrapper}>
+                  <FiMail aria-hidden='true' />
                   <input
-                    type='text'
+                    id='login-email'
+                    name='email'
+                    type='email'
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder='e.g. shadow_stalker99@playzone.gg'
                   />
                 </div>
@@ -91,13 +126,20 @@ function LoginPage() {
 
               <div className={styles.field}>
                 <div className={styles.labelRow}>
-                  <label>Password</label>
+                  <label htmlFor='login-password'>Password</label>
                   <a>Forgot password?</a>
                 </div>
 
                 <div className={styles.inputWrapper}>
                   <FiLock />
-                  <input type='password' placeholder='Enter your password' />
+                  <input
+                    id='login-password'
+                    name='password'
+                    type='password'
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder='Enter your password'
+                  />
                   <FiEye />
                 </div>
               </div>
@@ -114,7 +156,7 @@ function LoginPage() {
                 </div>
               </div>
 
-              <button className={styles.loginButton} type='button'>
+              <button className={styles.loginButton} type='submit'>
                 Sign In to PLAYZONE
                 <FiArrowRight />
               </button>
@@ -147,7 +189,7 @@ function LoginPage() {
                   Google
                 </button>
               </div>
-            </div>
+            </form>
           </div>
 
           {/* LEFT FOOTER */}

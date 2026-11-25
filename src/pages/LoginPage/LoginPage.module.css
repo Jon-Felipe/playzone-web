@@ -217,6 +217,16 @@
   color: var(--text-muted);
 }
 
+.inputWrapper input:-webkit-autofill,
+.inputWrapper input:-webkit-autofill:hover,
+.inputWrapper input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--text-primary);
+  caret-color: var(--text-primary);
+  -webkit-box-shadow: 0 0 0 1000px var(--surface-hover) inset;
+  box-shadow: 0 0 0 1000px var(--surface-hover) inset;
+  transition: background-color 9999s ease-out;
+}
+
 .inputWrapper svg {
   flex-shrink: 0;
   font-size: 15px;

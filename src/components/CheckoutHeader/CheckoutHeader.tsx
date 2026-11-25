@@ -6,8 +6,8 @@ import { useAppSelector } from '../../app/hooks';
 import styles from './CheckoutHeader.module.css';
 
 const steps = [
-  { number: 1, label: 'Cart', to: '/cart' },
-  { number: 2, label: 'Payment', to: '/cart/payment' },
+  { number: 1, label: 'Cart Summary', to: '/cart' },
+  { number: 2, label: 'Payment Method', to: '/cart/payment' },
   { number: 3, label: 'Review & Keys', to: '/cart/review' },
 ];
 

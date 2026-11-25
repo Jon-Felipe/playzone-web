@@ -10,6 +10,7 @@ function getNavLinkClassName({ isActive }: { isActive: boolean }) {
 }
 
 function Header() {
+  const user = useAppSelector((state) => state.user);
   const cartItemCount = useAppSelector((state) =>
     state.cart.items.reduce((total, item) => total + item.quantity, 0),
   );
@@ -71,15 +72,20 @@ function Header() {
 
         <div className={styles.divider} />
 
-        {/* Profile */}
-        <div className={styles.profile}>
-          <div className={styles.avatar}>
-            G
-            <span className={styles.onlineDot} />
-          </div>
+        {user.isLoggedIn ? (
+          <div className={styles.profile}>
+            <div className={styles.avatar}>
+              {user.name.charAt(0).toUpperCase()}
+              <span className={styles.onlineDot} />
+            </div>
 
-          <span className={styles.level}>LVL 42</span>
-        </div>
+            <span className={styles.level}>LVL 42</span>
+          </div>
+        ) : (
+          <Link to='/login' className={styles.loginLink}>
+            Login
+          </Link>
+        )}
       </div>
     </header>
   );

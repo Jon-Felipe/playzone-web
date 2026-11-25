@@ -6,6 +6,8 @@ import StorePage from './pages/StorePage/StorePage';
 import CartPage from './pages/CartPage/CartPage';
 import PaymentPage from './pages/PaymentPage/PaymentPage';
 import ReviewPage from './pages/ReviewPage/ReviewPage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import RegisterPage from './pages/RegisterPage/RegisterPage';
 
 // components
 import SiteLayout from './components/Layouts/SiteLayout';
@@ -18,6 +20,8 @@ function App() {
         <Route path='/' element={<SiteLayout />}>
           <Route index element={<HomePage />} />
           <Route path='store' element={<StorePage />} />
+          <Route path='login' element={<LoginPage />} />
+          <Route path='register' element={<RegisterPage />} />
           <Route path='cart' element={<CheckoutLayout />}>
             <Route index element={<CartPage />} />
             <Route path='payment' element={<PaymentPage />} />

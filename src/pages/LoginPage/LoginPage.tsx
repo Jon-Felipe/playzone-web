@@ -26,7 +26,7 @@ import styles from './LoginPage.module.css';
 
 function LoginPage() {
   return (
-    <main className={styles.page}>
+    <div className={styles.page}>
       <div className={styles.loginContainer}>
         {/* LEFT SIDE */}
         <section className={styles.leftPanel}>
@@ -307,7 +307,7 @@ function LoginPage() {
           </div>
         </section>
       </div>
-    </main>
+    </div>
   );
 }
 

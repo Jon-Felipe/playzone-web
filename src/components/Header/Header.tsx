@@ -3,15 +3,16 @@ import { FiBell, FiBox, FiSearch, FiShoppingCart } from 'react-icons/fi';
 
 // extras
 import styles from './Header.module.css';
-import { useSelector } from 'react-redux';
-import type { RootState } from '../../app/store';
+import { useAppSelector } from '../../app/hooks';
 
 function getNavLinkClassName({ isActive }: { isActive: boolean }) {
   return `${styles.navLink} ${isActive ? styles.active : ''}`;
 }
 
 function Header() {
-  const { items: cartItems } = useSelector((state: RootState) => state.cart);
+  const cartItemCount = useAppSelector((state) =>
+    state.cart.items.reduce((total, item) => total + item.quantity, 0),
+  );
 
   return (
     <header className={styles.header}>
@@ -54,8 +55,18 @@ function Header() {
 
         {/* Cart */}
         <div className={styles.actionItem}>
-          <FiShoppingCart aria-hidden='true' />
-          <span className={styles.cartCount}>{cartItems.length}</span>
+          <Link
+            to='/cart'
+            className={styles.cartLink}
+            aria-label={`View cart with ${cartItemCount} ${
+              cartItemCount === 1 ? 'item' : 'items'
+            }`}
+          >
+            <FiShoppingCart aria-hidden='true' />
+            {cartItemCount > 0 && (
+              <span className={styles.cartCount}>{cartItemCount}</span>
+            )}
+          </Link>
         </div>
 
         <div className={styles.divider} />

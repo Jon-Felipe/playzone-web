@@ -195,6 +195,20 @@
 
 /* Cart */
 
+.cartLink {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  transition:
+    color var(--transition),
+    background-color var(--transition);
+}
+
 .cartCount {
   position: absolute;
   top: -8px;

@@ -73,14 +73,18 @@ function Header() {
         <div className={styles.divider} />
 
         {user.isLoggedIn ? (
-          <div className={styles.profile}>
+          <Link
+            to='/profile'
+            className={styles.profile}
+            aria-label={`${user.name}'s profile`}
+          >
             <div className={styles.avatar}>
               {user.name.charAt(0).toUpperCase()}
               <span className={styles.onlineDot} />
             </div>
 
             <span className={styles.level}>LVL 42</span>
-          </div>
+          </Link>
         ) : (
           <Link to='/login' className={styles.loginLink}>
             Login

@@ -1,5 +1,5 @@
 import { Link, NavLink } from 'react-router';
-import { FiBell, FiBox, FiSearch, FiShoppingCart } from 'react-icons/fi';
+import { FiBell, FiBox, FiSearch, FiShoppingBag } from 'react-icons/fi';
 
 // extras
 import styles from './Header.module.css';
@@ -63,7 +63,7 @@ function Header() {
               cartItemCount === 1 ? 'item' : 'items'
             }`}
           >
-            <FiShoppingCart aria-hidden='true' />
+            <FiShoppingBag aria-hidden='true' />
             {cartItemCount > 0 && (
               <span className={styles.cartCount}>{cartItemCount}</span>
             )}

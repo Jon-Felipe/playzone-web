@@ -8,6 +8,7 @@ import PaymentPage from './pages/PaymentPage/PaymentPage';
 import ReviewPage from './pages/ReviewPage/ReviewPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
 
 // components
 import SiteLayout from './components/Layouts/SiteLayout';
@@ -22,6 +23,7 @@ function App() {
           <Route path='store' element={<StorePage />} />
           <Route path='login' element={<LoginPage />} />
           <Route path='register' element={<RegisterPage />} />
+          <Route path='profile' element={<ProfilePage />} />
           <Route path='cart' element={<CheckoutLayout />}>
             <Route index element={<CartPage />} />
             <Route path='payment' element={<PaymentPage />} />

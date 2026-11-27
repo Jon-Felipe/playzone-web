@@ -477,10 +477,7 @@ function ProfilePage() {
           {/* Level & Tier Panel */}
           <section className={styles.panel}>
             <div className={styles.panelHeader}>
-              <h3>
-                <FaCog className={styles.tierIcon} />
-                Level & Tier
-              </h3>
+              <h3>Level & Tier</h3>
 
               <span className={styles.levelBadge}>LVL 42</span>
             </div>

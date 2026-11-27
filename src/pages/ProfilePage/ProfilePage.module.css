@@ -936,11 +936,6 @@
   font-size: var(--text-xs);
 }
 
-.tierIcon {
-  margin-right: var(--spacing-xs);
-  color: var(--primary-light);
-}
-
 .levelBadge {
   padding: 5px 10px;
   border-radius: var(--radius-full);
@@ -1211,7 +1206,11 @@
   place-items: center;
   border: 1px solid var(--border);
   border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
+  background: linear-gradient(
+    135deg,
+    var(--primary-dark),
+    var(--secondary-dark)
+  );
   color: var(--white);
   font-family: var(--font-heading);
   font-size: var(--text-sm);
@@ -1231,8 +1230,7 @@
 
 .friendAvatar > .friendOnline {
   background: var(--tertiary);
-  box-shadow: 0 0 8px
-    color-mix(in srgb, var(--tertiary) 35%, transparent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--tertiary) 35%, transparent);
 }
 
 .friendDetails {
